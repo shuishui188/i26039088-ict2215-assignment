@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHANGHAI | The Magic City</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        :root {
+            --primary-gold: #d4af37;
+            --dark-blue: #0f172a;
+            --text-gray: #666;
+            --white: #ffffff;
+        }
+
+        h1, h2, h3 { font-weight: 700; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo {
+            color: var(--primary-gold);
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            margin-left: 30px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover { color: var(--primary-gold); }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('img/img2.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: #ddd;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background-color: var(--primary-gold);
+            color: var(--dark-blue);
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid var(--primary-gold);
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-gold);
+        }
+
+        .intro {
+            padding: 100px 10%;
+            text-align: center;
+            background-color: var(--white);
+        }
+
+        .intro h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--dark-blue);
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contrast {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+        }
+
+        .contrast-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 50px;
+        }
+
+        .contrast-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            transition: transform 0.5s ease;
+        }
+
+        .contrast-item:hover .contrast-bg { transform: scale(1.05); }
+
+        .contrast-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 0;
+        }
+
+        .contrast-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--white);
+            max-width: 400px;
+        }
+
+        .contrast-content h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+        }
+
+        .highlights {
+            padding: 100px 10%;
+            background-color: var(--dark-blue);
+            color: var(--white);
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-header h2 { font-size: 2.5rem; color: var(--primary-gold); }
+        .section-header p { color: #888; margin-top: 10px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 30px;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .card h3 { margin-bottom: 15px; font-size: 1.5rem; }
+        .card p { color: #94a3b8; font-size: 0.95rem; }
+
+        footer {
+            padding: 50px;
+            text-align: center;
+            background-color: #000;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            .contrast { grid-template-columns: 1fr; }
+            nav { padding: 20px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">SHANGHAI</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#culture">Culture</a>
+            <a href="#landmarks">Landmarks</a>
+            <a href="#contact">Visit</a>
+            <a href="home.html">Go Back</a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Where East<br>Meets West</h1>
+            <p>Experience the pulse of the Orient. A city of dreams, defined by its skyline and its soul.</p>
+            <a href="#culture" class="btn">Explore the City</a>
+        </div>
+    </section>
+
+    <section id="culture" class="intro">
+        <h2>The Paris of the East</h2>
+        <p>Shanghai is not just a city; it is a timeline of the future and a museum of the past. From the colonial architecture of the Bund to the futuristic spires of Lujiazui, every corner tells a story of ambition and elegance.</p>
+    </section>
+
+    <section class="contrast">
+        <div class="contrast-item">
+            <img src="img/wt2.jpg" alt="The Bund" class="contrast-bg">
+            <div class="contrast-content">
+                <h3>The Heritage</h3>
+                <p>Walk along the Waitan. Witness 52 buildings of varying architectural styles, representing a century of history.</p>
+            </div>
+        </div>
+        <div class="contrast-item">
+            <img src="img/ljz.jpg" alt="Lujiazui" class="contrast-bg">
+            <div class="contrast-content">
+                <h3>The Future</h3>
+                <p>Cross the river to Pudong. Stand beneath the Shanghai Tower and look up at the clouds.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="landmarks" class="highlights">
+        <div class="section-header">
+            <h2>City Highlights</h2>
+            <p>Curated experiences for the modern traveler</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Shikumen Living</h3>
+                <p>Explore <strong>Xintiandi</strong> and <strong>Tianzifang</strong>. These traditional lane houses have been transformed into trendy boutiques and cafes, blending old Shanghai with new luxury.</p>
+            </div>
+            <div class="card">
+                <h3>Culinary Art</h3>
+                <p>From the sweet and savory <strong>Xiaolongbao</strong> (soup dumplings) to the world-class cocktail bars hidden in the French Concession.</p>
+            </div>
+            <div class="card">
+                <h3>Art & Culture</h3>
+                <p>Visit the <strong>Power Station of Art</strong> or the West Bund. Shanghai is rapidly becoming the art capital of Asia.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2026 Visit Shanghai. All Rights Reserved.</p>
+        <p>Designed with passion for the Magic City.</p>
+    </footer>
+
+</body>
+</html>
