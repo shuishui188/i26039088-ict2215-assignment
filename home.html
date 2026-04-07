@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHANGHAI</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #1b1b1b; /* CS2 深色背景 */
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        header {
+            background-color: #000;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #de9b35;
+        }
+
+        header h1 { margin: 0; font-size: 24px; letter-spacing: 1px; }
+
+        .hero {
+            background-color: #2b2b2b; 
+            background-size: cover;
+            background-position: center;
+            height: calc(100vh - 212px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+
+            .slider-container {
+                position: relative;
+                width: 100%; 
+                height: 100%;
+                overflow: hidden;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                background: #000;
+            }
+
+            .slider-track {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                transform: translateX(0); 
+                transition: transform 0.5s ease-in-out;
+            }
+            .slide {
+                min-width: 100%;
+                height: 100%;
+            }
+
+            .slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.8;
+            }
+
+            .prev, .next {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                cursor: pointer;
+                font-size: 18px;
+                border-radius: 5px;
+                user-select: none;
+                transition: background 0.3s;
+            }
+
+            .prev:hover, .next:hover {
+                background-color: rgba(0, 0, 0, 0.8);
+            }
+
+            .prev { left: 10px; }
+            .next { right: 10px; }
+
+            .dots-container {
+                position: absolute;
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 8px;
+            }
+
+            .dot {
+                width: 10px;
+                height: 10px;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .dot.active {
+                background-color: #fff;
+                transform: scale(1.2);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #000;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SHANGHAI</h1>
+    </header>
+
+    <section class="hero">
+        <div class="slider-container">
+            <div class="slider-track">
+                <div class="slide"><a href="index.html"><img src="img/img1.jpg" alt="image1"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/dsn.jpg" alt="image2"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/img3.jpg" alt="image3"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/dsn1.jpg" alt="image1"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/pts.jpg" alt="image2"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/pts1.jpg" alt="image3"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/wkl.jpg" alt="image2"></a></div>
+                <div class="slide"><a href="index.html"><img src="img/wt.jpg" alt="image3"></a></div>
+            </div>
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+            <div class="dots-container"></div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>This page is for demonstration purposes only and is not an official website.</p>
+    </footer>
+
+</body>
+<script>
+    const track = document.querySelector('.slider-track');
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const dotsContainer = document.querySelector('.dots-container');
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let autoPlayInterval;
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateSlider();
+            resetTimer(); 
+        });
+        dotsContainer.appendChild(dot);
+    });
+    const dots = document.querySelectorAll('.dot');
+    function updateSlider() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentIndex].classList.add('active');
+    }
+    function nextSlide() {
+        currentIndex++;
+        if (currentIndex >= totalSlides) {
+            currentIndex = 0; 
+        }
+        updateSlider();
+    }
+    function prevSlide() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = totalSlides - 1; 
+        }
+        updateSlider();
+    }
+    function startTimer() {
+        autoPlayInterval = setInterval(nextSlide, 3000);
+    }
+    function resetTimer() {
+        clearInterval(autoPlayInterval);
+        startTimer();
+    }
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetTimer();
+    });
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetTimer();
+    });
+
+    startTimer();
+
+</script>
+</html>
